@@ -9,12 +9,9 @@ namespace AmsysMonitor
 {
     public partial class MainForm : Form
     {
-        private readonly Timer monitorTimer;
-
         private readonly MonitorSetting setting;
         private readonly MonitorEngine engine;
-
-        private bool isChecking = false;
+        private readonly TrayService trayService;
 
         public MainForm()
         {
@@ -26,29 +23,20 @@ namespace AmsysMonitor
             setting = new MonitorSetting();
             engine = new MonitorEngine(setting);
 
-            monitorTimer = new Timer();
-            monitorTimer.Interval = setting.CheckInterval;
-            monitorTimer.Tick += Timer_Tick;
-            monitorTimer.Start();
+            trayService = new TrayService();
+
+            // 감시 시작
+            engine.Start();
 
             Logger.Info("Amsys Monitor 시작");
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (isChecking)
-                return;
+            engine.Stop();
+            trayService.Dispose();
 
-            isChecking = true;
-
-            try
-            {
-               engine.Check();
-            }
-            finally
-            {
-                isChecking = false;
-            }
+            base.OnFormClosing(e);
         }
     }
 }

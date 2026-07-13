@@ -59,6 +59,7 @@
     <Compile Include="Services\ProcessWatcher.cs" />
     <Compile Include="Services\RestartService.cs" />
     <Compile Include="Services\StartupService.cs" />
+    <Compile Include="Services\TrayService.cs" />
     <Compile Include="Utils\IniFile.cs" />
     <Compile Include="Utils\Logger.cs" />
     <EmbeddedResource Include="MainForm.resx">
