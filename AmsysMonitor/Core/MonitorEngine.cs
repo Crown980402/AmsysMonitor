@@ -5,18 +5,22 @@ using AmsysMonitor.Services;
 
 namespace AmsysMonitor.Core
 {
-    public class MonitorEngine
+    public class MonitorEngine : IDisposable
     {
-        private readonly ProcessWatcher watcher;
+        private readonly HealthCheckService healthChecker;
         private readonly Timer timer;
-        private bool isChecking = false;
+
+        private bool isChecking;
 
         public MonitorEngine(MonitorSetting setting)
         {
-            watcher = new ProcessWatcher(setting);
+            healthChecker = new HealthCheckService(setting);
 
-            timer = new Timer();
-            timer.Interval = setting.CheckInterval;
+            timer = new Timer
+            {
+                Interval = setting.CheckInterval
+            };
+
             timer.Tick += Timer_Tick;
         }
 
@@ -29,7 +33,7 @@ namespace AmsysMonitor.Core
 
             try
             {
-                watcher.Check();
+                healthChecker.Check();
             }
             finally
             {
@@ -47,9 +51,10 @@ namespace AmsysMonitor.Core
             timer.Stop();
         }
 
-        public void Check()
+        public void Dispose()
         {
-            watcher.Check();
+            timer.Stop();
+            timer.Dispose();
         }
     }
 }

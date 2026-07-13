@@ -12,6 +12,7 @@ namespace AmsysMonitor
         private readonly MonitorSetting setting;
         private readonly MonitorEngine engine;
         private readonly TrayService trayService;
+        private readonly StartupService startupService;
 
         public MainForm()
         {
@@ -21,11 +22,14 @@ namespace AmsysMonitor
             ShowInTaskbar = false;
 
             setting = new MonitorSetting();
+
+            startupService = new StartupService();
+            startupService.Apply(setting);
+
             engine = new MonitorEngine(setting);
 
             trayService = new TrayService();
 
-            // 감시 시작
             engine.Start();
 
             Logger.Info("Amsys Monitor 시작");
@@ -33,7 +37,7 @@ namespace AmsysMonitor
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            engine.Stop();
+            engine.Dispose();
             trayService.Dispose();
 
             base.OnFormClosing(e);

@@ -8,84 +8,63 @@ namespace AmsysMonitor.Services
     public class ProcessWatcher
     {
         private readonly MonitorSetting setting;
-        private readonly RestartService restartService;
-
-        private DateTime hangStart = DateTime.MinValue;
 
         public ProcessWatcher(MonitorSetting setting)
         {
             this.setting = setting;
-            restartService = new RestartService(setting);
         }
 
-        public void Check()
+        /// <summary>
+        /// Amsys가 실행 중인지 확인
+        /// </summary>
+        public bool IsMainRunning()
         {
             try
             {
-                Process[] amsys =
-                    Process.GetProcessesByName("Amsys");
-
-                Process[] kocom =
-                    Process.GetProcessesByName(setting.ProcessName);
-
-                // 메인 프로그램도 없으면 아무 것도 하지 않음
-                if (amsys.Length == 0)
-                {
-                    Logger.Warning("Amsys.exe가 실행 중이 아닙니다.");
-                    return;
-                }
-
-                // Kocom만 죽은 경우
-                if (kocom.Length == 0)
-                {
-                    Logger.Warning("Amsys2Kocom.exe 종료 감지");
-
-                    restartService.Restart();
-
-                    return;
-                }
-
-                CheckResponding(kocom[0]);
+                return Process.GetProcessesByName("Amsys").Length > 0;
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.ToString());
+                return false;
             }
         }
 
-        private void CheckResponding(Process process)
+        /// <summary>
+        /// Amsys2Kocom이 실행 중인지 확인
+        /// </summary>
+        public bool IsKocomRunning()
         {
-            if (process.Responding)
+            try
             {
-                hangStart = DateTime.MinValue;
-                return;
+                return Process.GetProcessesByName(setting.ProcessName).Length > 0;
             }
-
-            if (hangStart == DateTime.MinValue)
+            catch (Exception ex)
             {
-                hangStart = DateTime.Now;
-                Logger.Warning("응답 없음 감지");
-                return;
+                Logger.Error(ex.ToString());
+                return false;
             }
+        }
 
-            if ((DateTime.Now - hangStart).TotalSeconds >= 30)
+        /// <summary>
+        /// 프로세스 객체 반환
+        /// </summary>
+        public Process GetKocomProcess()
+        {
+            try
             {
-                Logger.Warning("30초 이상 응답 없음");
+                Process[] processes =
+                    Process.GetProcessesByName(setting.ProcessName);
 
-                try
-                {
-                    process.Kill();
+                if (processes.Length == 0)
+                    return null;
 
-                    Logger.Warning("프로세스 강제 종료");
-
-                    restartService.Restart();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex.ToString());
-                }
-
-                hangStart = DateTime.MinValue;
+                return processes[0];
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+                return null;
             }
         }
     }
