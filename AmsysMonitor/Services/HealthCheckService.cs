@@ -31,13 +31,18 @@ namespace AmsysMonitor.Services
         public void Check()
         {
             appStatus.LastCheckTime = DateTime.Now;
+            appStatus.IsMonitoring = true;
+            appStatus.LastError = string.Empty;
 
             appStatus.IsMainRunning =
                 processWatcher.IsMainRunning();
 
             if (!appStatus.IsMainRunning)
             {
-                Logger.Warning("Amsys.exe가 실행 중이 아닙니다.");
+                appStatus.LastError = "Amsys.exe가 실행 중이 아닙니다.";
+
+                Logger.Warning(appStatus.LastError);
+
                 return;
             }
 
@@ -59,7 +64,9 @@ namespace AmsysMonitor.Services
                 }
                 else
                 {
-                    Logger.Error("재시작 제한 횟수를 초과했습니다.");
+                    appStatus.LastError = "재시작 제한 횟수를 초과했습니다.";
+
+                    Logger.Error(appStatus.LastError);
                 }
 
                 return;
@@ -91,6 +98,8 @@ namespace AmsysMonitor.Services
                 }
                 catch (Exception ex)
                 {
+                    appStatus.LastError = ex.Message;
+
                     Logger.Error(ex.ToString());
                 }
 
@@ -105,7 +114,9 @@ namespace AmsysMonitor.Services
                 }
                 else
                 {
-                    Logger.Error("재시작 제한 횟수를 초과했습니다.");
+                    appStatus.LastError = "재시작 제한 횟수를 초과했습니다.";
+
+                    Logger.Error(appStatus.LastError);
                 }
             }
         }

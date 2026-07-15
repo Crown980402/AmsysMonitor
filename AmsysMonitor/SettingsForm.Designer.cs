@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.lblCheckInterval = new System.Windows.Forms.Label();
             this.lblHangTimeout = new System.Windows.Forms.Label();
             this.lblMaxRestart = new System.Windows.Forms.Label();
@@ -176,7 +177,7 @@
             // 
             // numMaxRestart
             // 
-            this.numMaxRestart.Location = new System.Drawing.Point(193, 133);
+            this.numMaxRestart.Location = new System.Drawing.Point(193, 134);
             this.numMaxRestart.Maximum = new decimal(new int[] {
             999,
             0,
@@ -231,6 +232,7 @@
             this.btnBrowse.TabIndex = 13;
             this.btnBrowse.Text = "찾아보기";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // btnSave
             // 
@@ -240,6 +242,7 @@
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -249,6 +252,7 @@
             this.btnCancel.TabIndex = 15;
             this.btnCancel.Text = "취소";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lblCheckInterval_sec
             // 
@@ -284,7 +288,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("굴림", 12F);
-            this.label4.Location = new System.Drawing.Point(319, 136);
+            this.label4.Location = new System.Drawing.Point(319, 137);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 16);
             this.label4.TabIndex = 19;
@@ -313,8 +317,9 @@
             this.Controls.Add(this.lblMaxRestart);
             this.Controls.Add(this.lblHangTimeout);
             this.Controls.Add(this.lblCheckInterval);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsForm";
-            this.Text = "Armsys Monitor";
+            this.Text = "Amsys Monitor";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCheckInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHangTimeout)).EndInit();

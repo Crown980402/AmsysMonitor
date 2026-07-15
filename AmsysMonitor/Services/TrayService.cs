@@ -22,13 +22,14 @@ namespace AmsysMonitor.Services
             menu.Items.Add("상태 보기", null, (s, e) => StatusClicked?.Invoke(this, EventArgs.Empty));
             menu.Items.Add("설정", null, (s, e) => SettingsClicked?.Invoke(this, EventArgs.Empty));
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("로그 열기", null, OnOpenLog);
+            menu.Items.Add("오늘 로그 열기", null, OnOpenTodayLog);
+            menu.Items.Add("로그 폴더 열기", null, OnOpenLogFolder);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("종료", null, (s, e) => ExitClicked?.Invoke(this, EventArgs.Empty));
 
             trayIcon = new NotifyIcon
             {
-                Icon = System.Drawing.SystemIcons.Application,
+                Icon = new System.Drawing.Icon("AmsysMonitor.ico"),
                 Text = "Amsys Monitor",
                 Visible = true,
                 ContextMenuStrip = menu
@@ -46,27 +47,39 @@ namespace AmsysMonitor.Services
                 ToolTipIcon.Info);
         }
 
-        private void OnOpenLog(object sender, EventArgs e)
+        private void OnOpenTodayLog(object sender, EventArgs e)
         {
             string logFile = Path.Combine(
                 Application.StartupPath,
-                "MonitorLog.txt");
+                "Logs",
+                $"MonitorLog_{DateTime.Now:yyyyMMdd}.txt");
 
-            if (File.Exists(logFile))
+            try
             {
+                if (!File.Exists(logFile))
+                {
+                    MessageBox.Show(
+                        "오늘 생성된 로그가 없습니다.",
+                        "Amsys Monitor",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    return;
+                }
+
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = logFile,
                     UseShellExecute = true
                 });
             }
-            else
+            catch (Exception ex)
             {
                 MessageBox.Show(
-                    "로그 파일이 없습니다.",
-                    "Amsys Monitor",
+                    ex.Message,
+                    "로그 열기 실패",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -77,6 +90,35 @@ namespace AmsysMonitor.Services
                 title,
                 message,
                 icon);
+        }
+
+        private void OnOpenLogFolder(object sender, EventArgs e)
+        {
+            string logFolder = Path.Combine(
+                Application.StartupPath,
+                "Logs");
+
+            try
+            {
+                if (!Directory.Exists(logFolder))
+                {
+                    Directory.CreateDirectory(logFolder);
+                }
+
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = logFolder,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "폴더 열기 실패",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         public void Dispose()

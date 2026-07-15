@@ -9,6 +9,7 @@ namespace AmsysMonitor.Core
     {
         private readonly MonitorSetting setting;
         private readonly HealthCheckService healthChecker;
+        public HealthCheckService HealthChecker => healthChecker;
         private readonly Timer timer;
 
         private bool isChecking;

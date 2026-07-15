@@ -50,12 +50,11 @@ namespace AmsysMonitor
         /// </summary>
         private void TrayService_StatusClicked(object sender, EventArgs e)
         {
-            // TODO : StatusForm 구현 후 교체
-            MessageBox.Show(
-                "Amsys Monitor가 정상 동작 중입니다.",
-                "상태",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            using (StatusForm form =
+                new StatusForm(engine.HealthChecker.Status))
+            {
+                form.ShowDialog();
+            }
         }
 
         /// <summary>

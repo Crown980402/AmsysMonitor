@@ -19,20 +19,37 @@ namespace AmsysMonitor.Services
 
         public bool Restart()
         {
+            // 재시작 대기시간 확인
             if ((DateTime.Now - lastRestart).TotalSeconds <
                 setting.RestartDelay)
             {
+                Logger.Warning(
+                    $"재시작 대기 중 ({setting.RestartDelay}초)");
+
                 return false;
             }
 
+            // 경로 확인
+            if (string.IsNullOrWhiteSpace(setting.ProgramPath))
+            {
+                Logger.Error("ProgramPath가 설정되지 않았습니다.");
+
+                return false;
+            }
+
+            // 파일 존재 확인
             if (!File.Exists(setting.ProgramPath))
             {
-                Logger.Error("실행 파일이 존재하지 않습니다.");
+                Logger.Error(
+                    $"실행 파일을 찾을 수 없습니다.\r\n{setting.ProgramPath}");
+
                 return false;
             }
 
             try
             {
+                Logger.Info("Amsys2Kocom.exe 재시작 시도");
+
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = setting.ProgramPath,
@@ -42,12 +59,13 @@ namespace AmsysMonitor.Services
 
                 lastRestart = DateTime.Now;
 
-                Logger.Info("Amsys2Kocom.exe 재실행 성공");
+                Logger.Info("Amsys2Kocom.exe 재시작 성공");
 
                 return true;
             }
             catch (Exception ex)
             {
+                Logger.Error($"재시작 실패 : {ex.Message}");
                 Logger.Error(ex.ToString());
 
                 return false;
