@@ -58,7 +58,7 @@
             // 
             this.lblCheckInterval.AutoSize = true;
             this.lblCheckInterval.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblCheckInterval.Location = new System.Drawing.Point(21, 59);
+            this.lblCheckInterval.Location = new System.Drawing.Point(21, 22);
             this.lblCheckInterval.Name = "lblCheckInterval";
             this.lblCheckInterval.Size = new System.Drawing.Size(81, 16);
             this.lblCheckInterval.TabIndex = 0;
@@ -69,7 +69,7 @@
             // 
             this.lblHangTimeout.AutoSize = true;
             this.lblHangTimeout.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblHangTimeout.Location = new System.Drawing.Point(21, 97);
+            this.lblHangTimeout.Location = new System.Drawing.Point(21, 60);
             this.lblHangTimeout.Name = "lblHangTimeout";
             this.lblHangTimeout.Size = new System.Drawing.Size(115, 16);
             this.lblHangTimeout.TabIndex = 1;
@@ -80,7 +80,7 @@
             // 
             this.lblMaxRestart.AutoSize = true;
             this.lblMaxRestart.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblMaxRestart.Location = new System.Drawing.Point(21, 173);
+            this.lblMaxRestart.Location = new System.Drawing.Point(21, 136);
             this.lblMaxRestart.Name = "lblMaxRestart";
             this.lblMaxRestart.Size = new System.Drawing.Size(138, 16);
             this.lblMaxRestart.TabIndex = 2;
@@ -91,7 +91,7 @@
             // 
             this.lblRestartDelay.AutoSize = true;
             this.lblRestartDelay.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblRestartDelay.Location = new System.Drawing.Point(21, 137);
+            this.lblRestartDelay.Location = new System.Drawing.Point(21, 100);
             this.lblRestartDelay.Name = "lblRestartDelay";
             this.lblRestartDelay.Size = new System.Drawing.Size(98, 16);
             this.lblRestartDelay.TabIndex = 3;
@@ -102,7 +102,7 @@
             // 
             this.lblProgramPath.AutoSize = true;
             this.lblProgramPath.Font = new System.Drawing.Font("굴림", 12F);
-            this.lblProgramPath.Location = new System.Drawing.Point(22, 334);
+            this.lblProgramPath.Location = new System.Drawing.Point(22, 321);
             this.lblProgramPath.Name = "lblProgramPath";
             this.lblProgramPath.Size = new System.Drawing.Size(108, 16);
             this.lblProgramPath.TabIndex = 4;
@@ -110,7 +110,7 @@
             // 
             // numCheckInterval
             // 
-            this.numCheckInterval.Location = new System.Drawing.Point(193, 57);
+            this.numCheckInterval.Location = new System.Drawing.Point(193, 20);
             this.numCheckInterval.Maximum = new decimal(new int[] {
             60,
             0,
@@ -132,7 +132,7 @@
             // 
             // numHangTimeout
             // 
-            this.numHangTimeout.Location = new System.Drawing.Point(193, 95);
+            this.numHangTimeout.Location = new System.Drawing.Point(193, 58);
             this.numHangTimeout.Maximum = new decimal(new int[] {
             300,
             0,
@@ -154,7 +154,7 @@
             // 
             // numRestartDelay
             // 
-            this.numRestartDelay.Location = new System.Drawing.Point(193, 134);
+            this.numRestartDelay.Location = new System.Drawing.Point(193, 97);
             this.numRestartDelay.Maximum = new decimal(new int[] {
             300,
             0,
@@ -176,7 +176,7 @@
             // 
             // numMaxRestart
             // 
-            this.numMaxRestart.Location = new System.Drawing.Point(193, 170);
+            this.numMaxRestart.Location = new System.Drawing.Point(193, 133);
             this.numMaxRestart.Maximum = new decimal(new int[] {
             999,
             0,
@@ -189,7 +189,7 @@
             // chkLog
             // 
             this.chkLog.AutoSize = true;
-            this.chkLog.Location = new System.Drawing.Point(24, 225);
+            this.chkLog.Location = new System.Drawing.Point(24, 198);
             this.chkLog.Name = "chkLog";
             this.chkLog.Size = new System.Drawing.Size(76, 16);
             this.chkLog.TabIndex = 9;
@@ -199,7 +199,7 @@
             // chkStartup
             // 
             this.chkStartup.AutoSize = true;
-            this.chkStartup.Location = new System.Drawing.Point(24, 259);
+            this.chkStartup.Location = new System.Drawing.Point(24, 232);
             this.chkStartup.Name = "chkStartup";
             this.chkStartup.Size = new System.Drawing.Size(147, 16);
             this.chkStartup.TabIndex = 10;
@@ -209,7 +209,7 @@
             // chkMinimized
             // 
             this.chkMinimized.AutoSize = true;
-            this.chkMinimized.Location = new System.Drawing.Point(24, 294);
+            this.chkMinimized.Location = new System.Drawing.Point(24, 267);
             this.chkMinimized.Name = "chkMinimized";
             this.chkMinimized.Size = new System.Drawing.Size(156, 16);
             this.chkMinimized.TabIndex = 11;
@@ -218,14 +218,14 @@
             // 
             // txtProgramPath
             // 
-            this.txtProgramPath.Location = new System.Drawing.Point(24, 365);
+            this.txtProgramPath.Location = new System.Drawing.Point(24, 352);
             this.txtProgramPath.Name = "txtProgramPath";
             this.txtProgramPath.Size = new System.Drawing.Size(289, 21);
             this.txtProgramPath.TabIndex = 12;
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(340, 365);
+            this.btnBrowse.Location = new System.Drawing.Point(340, 352);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 13;
@@ -254,7 +254,7 @@
             // 
             this.lblCheckInterval_sec.AutoSize = true;
             this.lblCheckInterval_sec.Font = new System.Drawing.Font("굴림", 12F);
-            this.lblCheckInterval_sec.Location = new System.Drawing.Point(319, 59);
+            this.lblCheckInterval_sec.Location = new System.Drawing.Point(319, 22);
             this.lblCheckInterval_sec.Name = "lblCheckInterval_sec";
             this.lblCheckInterval_sec.Size = new System.Drawing.Size(39, 16);
             this.lblCheckInterval_sec.TabIndex = 16;
@@ -264,7 +264,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("굴림", 12F);
-            this.label2.Location = new System.Drawing.Point(319, 97);
+            this.label2.Location = new System.Drawing.Point(319, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 16);
             this.label2.TabIndex = 17;
@@ -274,7 +274,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("굴림", 12F);
-            this.label3.Location = new System.Drawing.Point(319, 137);
+            this.label3.Location = new System.Drawing.Point(319, 100);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 18;
@@ -284,7 +284,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("굴림", 12F);
-            this.label4.Location = new System.Drawing.Point(319, 173);
+            this.label4.Location = new System.Drawing.Point(319, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 16);
             this.label4.TabIndex = 19;
@@ -315,7 +315,7 @@
             this.Controls.Add(this.lblCheckInterval);
             this.Name = "SettingsForm";
             this.Text = "Armsys Monitor";
-            this.Load += new System.EventHandler(this.SettingsForm_Load_2);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCheckInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHangTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRestartDelay)).EndInit();
