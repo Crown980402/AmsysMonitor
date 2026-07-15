@@ -10,14 +10,21 @@ namespace AmsysMonitor.Services
         private readonly NotifyIcon trayIcon;
         private readonly ContextMenuStrip menu;
 
+        // 이벤트
+        public event EventHandler StatusClicked;
+        public event EventHandler SettingsClicked;
+        public event EventHandler ExitClicked;
+
         public TrayService()
         {
             menu = new ContextMenuStrip();
 
-            menu.Items.Add("상태 보기", null, OnStatus);
+            menu.Items.Add("상태 보기", null, (s, e) => StatusClicked?.Invoke(this, EventArgs.Empty));
+            menu.Items.Add("설정", null, (s, e) => SettingsClicked?.Invoke(this, EventArgs.Empty));
+            menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("로그 열기", null, OnOpenLog);
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("종료", null, OnExit);
+            menu.Items.Add("종료", null, (s, e) => ExitClicked?.Invoke(this, EventArgs.Empty));
 
             trayIcon = new NotifyIcon
             {
@@ -27,22 +34,16 @@ namespace AmsysMonitor.Services
                 ContextMenuStrip = menu
             };
 
-            trayIcon.DoubleClick += OnStatus;
+            trayIcon.DoubleClick += (s, e) =>
+            {
+                StatusClicked?.Invoke(this, EventArgs.Empty);
+            };
 
             trayIcon.ShowBalloonTip(
                 3000,
                 "Amsys Monitor",
                 "백그라운드 감시를 시작했습니다.",
                 ToolTipIcon.Info);
-        }
-
-        private void OnStatus(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Amsys Monitor가 정상 동작 중입니다.",
-                "상태",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
         }
 
         private void OnOpenLog(object sender, EventArgs e)
@@ -61,18 +62,27 @@ namespace AmsysMonitor.Services
             }
             else
             {
-                MessageBox.Show("로그 파일이 없습니다.");
+                MessageBox.Show(
+                    "로그 파일이 없습니다.",
+                    "Amsys Monitor",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
         }
 
-        private void OnExit(object sender, EventArgs e)
+        public void ShowBalloon(string title, string message, ToolTipIcon icon = ToolTipIcon.Info)
         {
-            trayIcon.Visible = false;
-            Application.Exit();
+            trayIcon.ShowBalloonTip(
+                3000,
+                title,
+                message,
+                icon);
         }
 
         public void Dispose()
         {
+            trayIcon.Visible = false;
+
             trayIcon.Dispose();
             menu.Dispose();
         }

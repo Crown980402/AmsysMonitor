@@ -7,6 +7,7 @@ namespace AmsysMonitor.Core
 {
     public class MonitorEngine : IDisposable
     {
+        private readonly MonitorSetting setting;
         private readonly HealthCheckService healthChecker;
         private readonly Timer timer;
 
@@ -14,6 +15,8 @@ namespace AmsysMonitor.Core
 
         public MonitorEngine(MonitorSetting setting)
         {
+            this.setting = setting;
+
             healthChecker = new HealthCheckService(setting);
 
             timer = new Timer
@@ -41,15 +44,40 @@ namespace AmsysMonitor.Core
             }
         }
 
+        /// <summary>
+        /// 감시 시작
+        /// </summary>
         public void Start()
         {
             timer.Start();
         }
 
+        /// <summary>
+        /// 감시 중지
+        /// </summary>
         public void Stop()
         {
             timer.Stop();
         }
+
+        /// <summary>
+        /// 설정 다시 읽기
+        /// </summary>
+        public void Reload()
+        {
+            Stop();
+
+            setting.Load();
+
+            timer.Interval = setting.CheckInterval;
+
+            Start();
+        }
+
+        /// <summary>
+        /// 현재 설정 반환
+        /// </summary>
+        public MonitorSetting Setting => setting;
 
         public void Dispose()
         {
